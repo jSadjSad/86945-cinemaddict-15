@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [Юлия Садонина](https://up.htmlacademy.ru/ecmascript/15/user/86945).
-* Наставник: `Геннадий Максимов`.
+* Наставник: [Геннадий Максимов](https://htmlacademy.ru/profile/gennadiy).
 
 ---
 
