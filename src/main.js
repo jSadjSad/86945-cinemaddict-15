@@ -6,6 +6,7 @@ import {createFilmCard} from './view/film-card.js';
 import {createShowMoreButton} from './view/show-more.js';
 import {createExtraFilmListTemplate} from './view/extra-film-list.js';
 import {createFilmDetailsTemplate} from './view/film-details.js';
+import {createFooterStatistics} from './view/footer-statistics.js';
 
 
 const MAIN_FILM_LIST_COUNT = 5;
@@ -42,8 +43,7 @@ for (let i = 0; i < EXTRA_FILM_LISTS_COUNT; i++) {
   render(filmBoard, createExtraFilmListTemplate());
 }
 
-const topRatedFilmList = filmBoard.querySelectorAll('.films-list--extra')[0];
-const mostCommentedFilmList = filmBoard.querySelectorAll('.films-list--extra')[1];
+const [topRatedFilmList, mostCommentedFilmList] = filmBoard.querySelectorAll('.films-list--extra');
 
 const topRatedFilmListTitle = topRatedFilmList.querySelector('.films-list__title');
 topRatedFilmListTitle.textContent = 'Top rated';
@@ -65,3 +65,7 @@ for (let i = 0; i < EXTRA_FILM_LIST_COUNT; i++) {
 
 const documentBody = document.querySelector('body');
 render(documentBody, createFilmDetailsTemplate());
+
+
+const footer = document.querySelector('.footer');
+render(footer, createFooterStatistics());
