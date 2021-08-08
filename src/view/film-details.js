@@ -15,8 +15,14 @@ export const createFilmDetailsTemplate = (film) => {
 
   const date = formatDateDay(releaseDate);
 
-  const genresList = genres.map((genre) => `<span> ${genre}   </span>`).join('  ');
-  const genresContent = `<td class="film-details__cell">${genresList}</td>`;
+  const genresList = genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('  ');
+
+  const {isInWatchList, isWatched, isFavorite} = userDetails;
+
+  const watchListActiveStyle = (isInWatchList) ? 'film-details__controls-item--active' : '';
+  const watchedActiveStyle = (isWatched) ? 'film-details__controls-item--active' : '';
+  const isFavoriteActiveStyle = (isFavorite) ? 'film-details__controls-item--active' : '';
+
 
   return (
     `<section class="film-details">
@@ -76,15 +82,15 @@ export const createFilmDetailsTemplate = (film) => {
             </table>
 
             <p class="film-details__film-description">
-              The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim) is an arrogant, friendless, and misogynous marksman who displays his trick gunshot act in the vaudeville circuit. His show features a beautiful assistant, Connie (Mary Beth Hughes) and her drunken husband Al (Dan Duryea), Flamarion's other assistant. Flamarion falls in love with Connie, the movie's femme fatale, and is soon manipulated by her into killing her no good husband during one of their acts.
+              ${description}
             </p>
           </div>
         </div>
 
         <section class="film-details__controls">
-          <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-          <button type="button" class="film-details__control-button film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-          <button type="button" class="film-details__control-button film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
+          <button type="button" class="film-details__control-button film-details__control-button--watchlist ${watchListActiveStyle}" id="watchlist" name="watchlist" ${isInWatchList ? 'checked' : ''}>Add to watchlist</button>
+          <button type="button" class="film-details__control-button film-details__control-button--watched ${watchedActiveStyle}" id="watched" name="watched" ${isWatched ? 'checked' : ''}>Already watched</button>
+          <button type="button" class="film-details__control-button film-details__control-button--favorite ${isFavoriteActiveStyle}" id="favorite" name="favorite" ${isFavorite ? 'checked' : ''}>Add to favorites</button>
         </section>
       </div>
 

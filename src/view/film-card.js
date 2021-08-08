@@ -15,11 +15,9 @@ export const createFilmCard = (film) => {
 
   const {isInWatchList, isWatched, isFavorite} = userDetails;
 
-  const watchListStyle = (isInWatchList) ? 'film-card__controls-item film-card__controls-item--add-to-watchlist film-card__controls-item--active' : 'film-card__controls-item film-card__controls-item--add-to-watchlist';
-
-  const watchedMarkStyle = (isWatched) ? 'film-card__controls-item film-card__controls-item--mark-as-watched film-card__controls-item--active' : 'film-card__controls-item film-card__controls-item--mark-as-watched';
-
-  const isFavoriteMarkStyle = (isFavorite) ? 'film-card__controls-item film-card__controls-item--favorite film-card__controls-item--active' : 'film-card__controls-item film-card__controls-item--favorite';
+  const watchListActiveStyle = (isInWatchList) ? ' film-card__controls-item--active' : '';
+  const watchedActiveStyle = (isWatched) ? ' film-card__controls-item--active' : '';
+  const isFavoriteActiveStyle = (isFavorite) ? 'film-card__controls-item--active' : '';
 
 
   return (
@@ -35,9 +33,9 @@ export const createFilmCard = (film) => {
     <p class="film-card__description">${shortDescription}</p>
     <a class="film-card__comments">${commentsNumber}</a>
     <div class="film-card__controls">
-      <button class="${watchListStyle}" type="button">Add to watchlist</button>
-      <button class="${watchedMarkStyle}" type="button">Mark as watched</button>
-      <button class="${isFavoriteMarkStyle}" type="button">Mark as favorite</button>
+      <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${watchListActiveStyle}" type="button">Add to watchlist</button>
+      <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${watchedActiveStyle}" type="button">Mark as watched</button>
+      <button class="film-card__controls-item film-card__controls-item--favorite ${isFavoriteActiveStyle}" type="button">Mark as favorite</button>
     </div>
   </article>`);
 };
