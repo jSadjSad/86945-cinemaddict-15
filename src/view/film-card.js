@@ -1,6 +1,10 @@
+import {formatDateYear} from '../utils.js';
+
 export const createFilmCard = (film) => {
 
   const {title, poster, releaseDate, runtime, genres, description, raiting, userDetails, comments} = film;
+
+  const date = formatDateYear(releaseDate);
 
   const shortDescription = (description.length < 140) ? description : `${description.slice(0, 139)}…`;
 
@@ -23,7 +27,7 @@ export const createFilmCard = (film) => {
     <h3 class="film-card__title">${title}e</h3>
     <p class="film-card__rating">${raiting}</p>
     <p class="film-card__info">
-      <span class="film-card__year">${dayjs(releaseDate).format('YYYY')}</span>
+      <span class="film-card__year">${date}</span>
       <span class="film-card__duration">${runtime}</span>
       <span class="film-card__genre">${genre}</span>
     </p>

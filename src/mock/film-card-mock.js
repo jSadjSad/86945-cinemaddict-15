@@ -3,7 +3,7 @@ import {getRandomBoolean} from '../utils.js';
 import {getRandomFloat} from '../utils.js';
 import {getTimeFromMins} from '../utils.js';
 import {getRandomDateInPast} from '../utils.js';
-import dayjs from 'dayjs';
+import {formatDateDay} from '../utils.js';
 
 const MIN_DESCRIPTION_LENGTH = 1;
 const MAX_DESCRIPTION_LENGTH = 5;
@@ -52,7 +52,7 @@ const generateDirectors = () => {
     directors.push(directorsNames[getRandomInteger(0, directorsNames.length - 1)]);
   }
 
-  return directors.join(', ');
+  return directors;
 };
 
 
@@ -64,7 +64,7 @@ const generateWriters = () => {
     writers.push(writersNames[getRandomInteger(0, writersNames.length - 1)]);
   }
 
-  return writers.join(', ');
+  return writers;
 };
 
 
@@ -73,10 +73,10 @@ const generateActors = () => {
 
   const actors = [];
   for (let i = 0; i < ACTORS_NUMBER; i++) {
-    actors.push(actorsNames[getRandomInteger(0, actors.length - 1)]);
+    actors.push(actorsNames[getRandomInteger(0, actorsNames.length - 1)]);
   }
 
-  return actors.join(', ');
+  return actors;
 };
 
 
@@ -143,7 +143,7 @@ const createComment = () => {
   return {
     text: comments[commentIndex].commentText,
     emoji: emojies[comments[commentIndex].commentEmotion],
-    date: dayjs(getRandomDateInPast(SITE_STARTED_DATE)).format('D MMMM YYYY'),
+    date: formatDateDay(getRandomDateInPast(SITE_STARTED_DATE)),
     author: `${commentAuthorNames[getRandomInteger(0, commentAuthorNames.length)]}  ${commentAuthorSurnams[getRandomInteger(0, commentAuthorSurnams.length)]}`,
   };
 };

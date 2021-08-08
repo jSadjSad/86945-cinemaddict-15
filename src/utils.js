@@ -22,8 +22,16 @@ const getTimeFromMins = (mins) => {
 
 
 const getRandomDateInPast = (periodStart) => {
-  const timeGap = getRandomInteger((periodStart - dayjs()), 0);
-  return dayjs().add(timeGap, 'millisecond');
+  const timeGap = getRandomInteger((dayjs() - periodStart), 0);
+  return dayjs().subtract(timeGap, 'millisecond');
 };
 
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast};
+const formatDateYear = (date) => (
+  dayjs(date).format('YYYY')
+);
+
+const formatDateDay = (date) => (
+  dayjs(date).format('D MMMM YYYY')
+);
+
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay};

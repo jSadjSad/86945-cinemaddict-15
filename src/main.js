@@ -69,8 +69,8 @@ for (let i = 0; i < EXTRA_FILM_LIST_COUNT; i++) {
   render(mostCommentedFilmListContainer, createFilmCard(films[i]));
 }
 
-// const documentBody = document.querySelector('body');
-// render(documentBody, createFilmDetailsTemplate());
+const documentBody = document.querySelector('body');
+render(documentBody, createFilmDetailsTemplate(films[0]));
 
 const footer = document.querySelector('.footer');
 render(footer, createFooterStatistics());
