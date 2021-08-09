@@ -9,8 +9,8 @@ import {createFilmDetailsTemplate} from './view/film-details.js';
 import {createFooterStatistics} from './view/footer-statistics.js';
 
 import {generateFilm} from './mock/film-card-mock.js';
-import {generateFilter} from './mock/filter-mock.js';
-import {generateStatistics} from './mock/statistics-mock.js';
+import {generateFilter} from './mock/filter.js';
+import {generateStatistics} from './mock/statistics.js';
 
 
 const MAIN_FILM_LIST_COUNT = 22;
