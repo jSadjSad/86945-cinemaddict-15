@@ -19,10 +19,33 @@ export const createFilmDetailsTemplate = (film) => {
 
   const {isInWatchList, isWatched, isFavorite} = userDetails;
 
-  const watchListActiveStyle = (isInWatchList) ? 'film-details__controls-item--active' : '';
-  const watchedActiveStyle = (isWatched) ? 'film-details__controls-item--active' : '';
-  const isFavoriteActiveStyle = (isFavorite) ? 'film-details__controls-item--active' : '';
+  const watchListActiveStyle = (isInWatchList) ? 'film-details__control-button--active' : '';
+  const watchedActiveStyle = (isWatched) ? 'film-details__control-button--active' : '';
+  const isFavoriteActiveStyle = (isFavorite) ? 'film-details__control-button--active' : '';
 
+  const createCommentsItem = (comment) => {
+    const {text, emoji, date: commentDate, author} = comment;
+    const commentDateDay = formatDateDay(commentDate);
+
+    return (
+      `<li class="film-details__comment">
+        <span class="film-details__comment-emoji">
+          <img src="${emoji}" width="55" height="55" alt="emoji-puke">
+        </span>
+        <div>
+          <p class="film-details__comment-text">${text}</p>
+          <p class="film-details__comment-info">
+            <span class="film-details__comment-author">${author}</span>
+            <span class="film-details__comment-day">${commentDateDay}</span>
+            <button class="film-details__comment-delete">Delete</button>
+          </p>
+        </div>
+      </li>`);
+  };
+
+  const commentsList = comments.map((comment) => createCommentsItem(comment)).join(' ');
+
+  const commentsNumber = comments.length;
 
   return (
     `<section class="film-details">
@@ -96,9 +119,11 @@ export const createFilmDetailsTemplate = (film) => {
 
       <div class="film-details__bottom-container">
         <section class="film-details__comments-wrap">
-          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">0</span></h3>
+          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsNumber}</span></h3>
 
-          <ul class="film-details__comments-list"></ul>
+          <ul class="film-details__comments-list">
+            ${commentsList}
+          </ul>
 
           <div class="film-details__new-comment">
             <div class="film-details__add-emoji-label">
