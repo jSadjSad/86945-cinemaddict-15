@@ -16,7 +16,7 @@ const FILM_MAX_DURARION = 300;
 const WORLD_FIRST_FILM_RELEASE_DATE = new Date(1888, 1, 1);
 const FILM_MIN_RAITING = 0;
 const FILM_MAX_RAITING = 10;
-const SITE_STARTED_DATE = new Date(2021, 1, 8);
+const SITE_STARTED_DATE = new Date(2020, 1, 1);
 const MIN_COMMENTS_NUMBER = 1;
 const MAX_COMMENTS_NUMBER = 10;
 
@@ -165,7 +165,7 @@ export const generateFilm = () => (
     userDetails:
     {
       isWatched: getRandomBoolean(),
-      watchDate: getRandomDateInPast(this.releaseDate),
+      watchDate: getRandomDateInPast(2020, 1, 1),
       isFavorite: getRandomBoolean(),
       isInWatchList: getRandomBoolean(),
     },
