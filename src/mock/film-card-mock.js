@@ -165,7 +165,7 @@ export const generateFilm = () => (
     userDetails:
     {
       isWatched: getRandomBoolean(),
-      watchDate: getRandomDateInPast(2020, 1, 1),
+      watchDate: getRandomDateInPast(SITE_STARTED_DATE),
       isFavorite: getRandomBoolean(),
       isInWatchList: getRandomBoolean(),
     },
