@@ -3,12 +3,9 @@ import {getRandomBoolean} from '../utils.js';
 import {getRandomFloat} from '../utils.js';
 import {getTimeFromMins} from '../utils.js';
 import {getRandomDateInPast} from '../utils.js';
-import {formatDateDay} from '../utils.js';
 
 const MIN_DESCRIPTION_LENGTH = 1;
 const MAX_DESCRIPTION_LENGTH = 5;
-const MIN_DIRECTORS_NUMBER = 1;
-const MAX_DIRECTORS_NUMBER = 2;
 const MIN_WRITERS_NUMBER = 1;
 const MAX_WRITERS_NUMBER = 3;
 const MIN_GENRES_NUMBER = 1;
@@ -19,7 +16,7 @@ const FILM_MAX_DURARION = 300;
 const WORLD_FIRST_FILM_RELEASE_DATE = new Date(1888, 1, 1);
 const FILM_MIN_RAITING = 0;
 const FILM_MAX_RAITING = 10;
-const SITE_STARTED_DATE = new Date(2019, 1, 1);
+const SITE_STARTED_DATE = new Date(2021, 1, 8);
 const MIN_COMMENTS_NUMBER = 1;
 const MAX_COMMENTS_NUMBER = 10;
 
@@ -30,12 +27,6 @@ const generateFilmTitle = () => {
   return filmTitles[getRandomInteger(0, filmTitles.length - 1)];
 };
 
-const generateOriginalFilmTitle = () => {
-  const originalFilmTitles = ['Popeye the Sailor Meets Sindbad the Sailor', 'Sagebrush Trail', 'The Dance of Life', 'The Man with the Golden Arm', 'The Great Flamarion', 'Santa Claus Conquers the Martians', 'Made for Each Other'];
-
-  return originalFilmTitles[getRandomInteger(0, originalFilmTitles.length - 1)];
-};
-
 
 const generateFilmPoster = () => {
   const filmPosters = ['./images/posters/popeye-meets-sinbad.png', './images/posters/sagebrush-trail.jpg', './images/posters/the-dance-of-life.jpg', './images/posters/the-man-with-the-golden-arm.jpg', './images/posters/the-great-flamarion.jpg', './images/posters/santa-claus-conquers-the-martians.jpg', './images/posters/made-for-each-other.png'];
@@ -44,15 +35,12 @@ const generateFilmPoster = () => {
 };
 
 
-const generateDirectors = () => {
+const generateDirector = () => {
   const directorsNames = ['Charlie Chaplin', 'Alfred Hitchcock', 'Walt Disney', 'Orson Welles', 'Ingmar Bergman', 'Federico Fellini', 'Stanley Kubrick', 'Clint Eastwood', 'Francis Ford Coppola', 'Martin Scorcese', 'Steven Spielberg', 'Peter Jackson'];
 
-  const directors = [];
-  for (let i = 0; i < getRandomInteger(MIN_DIRECTORS_NUMBER, MAX_DIRECTORS_NUMBER); i++) {
-    directors.push(directorsNames[getRandomInteger(0, directorsNames.length - 1)]);
-  }
+  const director = directorsNames[getRandomInteger(0, directorsNames.length - 1)];
 
-  return directors;
+  return director;
 };
 
 
@@ -143,8 +131,8 @@ const createComment = () => {
   return {
     text: comments[commentIndex].commentText,
     emoji: emojies[comments[commentIndex].commentEmotion],
-    date: formatDateDay(getRandomDateInPast(SITE_STARTED_DATE)),
-    author: `${commentAuthorNames[getRandomInteger(0, commentAuthorNames.length)]}  ${commentAuthorSurnams[getRandomInteger(0, commentAuthorSurnams.length)]}`,
+    date: getRandomDateInPast(SITE_STARTED_DATE),
+    author: `${commentAuthorNames[getRandomInteger(0, commentAuthorNames.length - 1)]}  ${commentAuthorSurnams[getRandomInteger(0, commentAuthorSurnams.length - 1)]}`,
   };
 };
 
@@ -162,9 +150,9 @@ const createComments = () => {
 export const generateFilm = () => (
   {
     title: generateFilmTitle(),
-    originalTitle: generateOriginalFilmTitle(),
+    originalTitle: generateFilmTitle(),
     poster: generateFilmPoster(),
-    directors: generateDirectors(),
+    directors: generateDirector(),
     writers: generateWriters(),
     actors: generateActors(),
     releaseDate: getRandomDateInPast(WORLD_FIRST_FILM_RELEASE_DATE),
@@ -177,6 +165,7 @@ export const generateFilm = () => (
     userDetails:
     {
       isWatched: getRandomBoolean(),
+      watchDate: getRandomDateInPast(this.releaseDate),
       isFavorite: getRandomBoolean(),
       isInWatchList: getRandomBoolean(),
     },

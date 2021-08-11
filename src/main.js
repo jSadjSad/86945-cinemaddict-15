@@ -11,6 +11,7 @@ import {createFooterStatistics} from './view/footer-statistics.js';
 import {generateFilm} from './mock/film-card-mock.js';
 import {generateFilter} from './mock/filter.js';
 import {generateStatistics} from './mock/statistics.js';
+import {generateUserRaiting} from './mock/user-profile-mock.js';
 
 
 const MAIN_FILM_LIST_COUNT = 22;
@@ -25,6 +26,8 @@ const filters = generateFilter(films);
 
 const statistics = generateStatistics(films);
 
+const userRating = generateUserRaiting();
+
 const render = (container, template, place = 'beforeend') => {
   container.insertAdjacentHTML(place, template);
 };
@@ -34,7 +37,7 @@ const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 
 
-render (siteHeaderElement, createUserProfileTemplate());
+render (siteHeaderElement, createUserProfileTemplate(userRating));
 render(siteMainElement, createMenuTemplate(filters));
 render(siteMainElement, createFilmBoardTemplate());
 
@@ -95,5 +98,3 @@ render(documentBody, createFilmDetailsTemplate(films[0]));
 
 const footer = document.querySelector('.footer');
 render(footer, createFooterStatistics(statistics));
-
-console.log(films);

@@ -1,11 +1,11 @@
 import {formatDateDay} from '../utils.js';
+import {formatDateTime} from '../utils.js';
+import {formatDateFromNow} from '../utils.js';
 
+const DAY_IN_MILLISECONDS = 86400000;
 
 export const createFilmDetailsTemplate = (film) => {
-  const {title, originalTitle, poster, directors, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, userDetails, comments} = film;
-
-  const directorsTerm = (directors.length > 1) ? 'Directors' : 'Director';
-  const directorsContent = directors.join(', ');
+  const {title, originalTitle, poster, director, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, userDetails, comments} = film;
 
   const writersTerm = (writers.length > 1) ? 'Writers' : 'Writer';
   const writersContent = writers.join(', ');
@@ -25,7 +25,7 @@ export const createFilmDetailsTemplate = (film) => {
 
   const createCommentsItem = (comment) => {
     const {text, emoji, date: commentDate, author} = comment;
-    const commentDateDay = formatDateDay(commentDate);
+    const commentDateFormatted = (new Date() - commentDate > (2 * DAY_IN_MILLISECONDS)) ? formatDateTime(commentDate) : formatDateFromNow(commentDate);
 
     return (
       `<li class="film-details__comment">
@@ -36,7 +36,7 @@ export const createFilmDetailsTemplate = (film) => {
           <p class="film-details__comment-text">${text}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${author}</span>
-            <span class="film-details__comment-day">${commentDateDay}</span>
+            <span class="film-details__comment-day">${commentDateFormatted}</span>
             <button class="film-details__comment-delete">Delete</button>
           </p>
         </div>
@@ -75,8 +75,8 @@ export const createFilmDetailsTemplate = (film) => {
 
             <table class="film-details__table">
               <tr class="film-details__row">
-                <td class="film-details__term">${directorsTerm}</td>
-                <td class="film-details__cell">${directorsContent}</td>
+                <td class="film-details__term">Director</td>
+                <td class="film-details__cell">${director}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">${writersTerm}</td>

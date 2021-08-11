@@ -1,4 +1,27 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale('en', {
+  relativeTime: {
+    future: 'in %s',
+    past: '%s ago',
+    s: 'a few seconds',
+    m: 'a minute',
+    mm: '%d minutes',
+    h: 'an hour',
+    hh: '%d hours',
+    d: 'Today',
+    dd: '%d days',
+    M: 'a month',
+    MM: '%d months',
+    y: 'a year',
+    yy: '%d years',
+  },
+});
+
 
 const getRandomInteger = (a = 1, b = 0) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -23,7 +46,7 @@ const getTimeFromMins = (mins) => {
 
 const getRandomDateInPast = (periodStart) => {
   const timeGap = getRandomInteger((dayjs() - periodStart), 0);
-  return dayjs().subtract(timeGap, 'millisecond');
+  return dayjs().subtract(timeGap, 'millisecond').toDate();
 };
 
 const formatDateYear = (date) => (
@@ -34,4 +57,12 @@ const formatDateDay = (date) => (
   dayjs(date).format('D MMMM YYYY')
 );
 
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay};
+const formatDateTime = (date) => (
+  dayjs(date).format('YYYY/MM/DD HH:mm:ss')
+);
+
+const formatDateFromNow = (date) => (
+  dayjs(date).fromNow(true)
+);
+
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow};

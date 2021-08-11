@@ -1,7 +1,6 @@
 const createNemuItemTemplate = (filters) => {
   const {name, count} = filters;
 
-console.log(filters);
 
   return (
     `<a href="#watchlist" class="main-navigation__item">${name}<span class="main-navigation__item-count">${count}</span></a>`);
