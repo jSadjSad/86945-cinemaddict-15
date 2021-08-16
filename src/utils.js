@@ -4,6 +4,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 
+
 dayjs.updateLocale('en', {
   relativeTime: {
     future: 'in %s',
@@ -21,6 +22,37 @@ dayjs.updateLocale('en', {
     yy: '%d years',
   },
 });
+
+
+const renderTemplate = (container, template, place = 'beforeend') => {
+  container.insertAdjacentHTML(place, template, place);
+};
+
+
+const createElement = (template) => {
+  const newElement = document.createElement('div');
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+
+const RenderPosition = {
+  AFTERBEGIN: 'afterbegin',
+  BEFOREEND: 'beforeend',
+};
+
+
+const renderElement = (container, element, place) => {
+  switch(place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
 
 
 const getRandomInteger = (a = 1, b = 0) => {
@@ -66,25 +98,4 @@ const formatDateFromNow = (date) => (
 );
 
 
-const renderTemplate = (container, template, place = 'beforeend') => {
-  container.insertAdjacentHTML(place, template, place);
-};
-
-
-const RenderPosition = {
-  AFTERBEGIN: 'afterbegin',
-  BEFOREEND: 'beforeend',
-};
-
-const renderElement = (container, element, place) => {
-  switch(place) {
-    case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
-      break;
-    case RenderPosition.BEFOREEND:
-      container.appned(element);
-      break;
-  }
-};
-
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, renderTemplate, RenderPosition, renderElement};
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, renderTemplate, createElement, RenderPosition, renderElement};
