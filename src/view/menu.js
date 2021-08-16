@@ -1,13 +1,16 @@
-const createNemuItemTemplate = (filters) => {
-  const {name, count} = filters;
+import {createElement} from '../utils.js';
 
+
+const createNemuItemTemplate = (filterItem) => {
+  const {name, count} = filterItem;
+  const filterNameCapitalized = `${name[0].toUpperCase()}${name.substr(1).toLowerCase()}` ;
 
   return (
-    `<a href="#watchlist" class="main-navigation__item">${name}<span class="main-navigation__item-count">${count}</span></a>`);
+    `<a href="#${name}" class="main-navigation__item">${filterNameCapitalized}<span class="main-navigation__item-count">${count}</span></a>`);
 };
 
 
-export const createMenuTemplate = (filterItems) => {
+const createMenuTemplate = (filterItems) => {
   const filterItemsTemplate = filterItems
     .map((filter, index) => createNemuItemTemplate(filter, index === 0))
     .join('');
@@ -19,11 +22,29 @@ export const createMenuTemplate = (filterItems) => {
          ${filterItemsTemplate}
        </div>
        <a href="#stats" class="main-navigation__additional">Stats</a>
-     </nav>
-
-     <ul class="sort">
-       <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-       <li><a href="#" class="sort__button">Sort by date</a></li>
-       <li><a href="#" class="sort__button">Sort by rating</a></li>
-     </ul>`);
+     </nav>`);
 };
+
+
+export default class Menu {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenuTemplate(this._filters);
+  }
+
+  getElement() {
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
