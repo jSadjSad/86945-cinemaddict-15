@@ -65,4 +65,26 @@ const formatDateFromNow = (date) => (
   dayjs(date).fromNow(true)
 );
 
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow};
+
+const renderTemplate = (container, template, place = 'beforeend') => {
+  container.insertAdjacentHTML(place, template, place);
+};
+
+
+const RenderPosition = {
+  AFTERBEGIN: 'afterbegin',
+  BEFOREEND: 'beforeend',
+};
+
+const renderElement = (container, element, place) => {
+  switch(place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.appned(element);
+      break;
+  }
+};
+
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, renderTemplate, RenderPosition, renderElement};
