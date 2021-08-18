@@ -1,10 +1,12 @@
+import {createElement} from '../utils.js';
+
 import {formatDateDay} from '../utils.js';
 import {formatDateTime} from '../utils.js';
 import {formatDateFromNow} from '../utils.js';
 
 const DAY_IN_MILLISECONDS = 86400000;
 
-export const createFilmDetailsTemplate = (film) => {
+const createFilmDetailsTemplate = (film) => {
   const {title, originalTitle, poster, director, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, userDetails, comments} = film;
 
   const writersTerm = (writers.length > 1) ? 'Writers' : 'Writer';
@@ -161,3 +163,27 @@ export const createFilmDetailsTemplate = (film) => {
     </form>
   </section>`);
 };
+
+
+export default class FilmDetails {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

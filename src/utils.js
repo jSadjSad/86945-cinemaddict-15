@@ -4,6 +4,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 
+
 dayjs.updateLocale('en', {
   relativeTime: {
     future: 'in %s',
@@ -21,6 +22,37 @@ dayjs.updateLocale('en', {
     yy: '%d years',
   },
 });
+
+
+const renderTemplate = (container, template, place = 'beforeend') => {
+  container.insertAdjacentHTML(place, template, place);
+};
+
+
+const createElement = (template) => {
+  const newElement = document.createElement('div');
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+
+const RenderPosition = {
+  AFTERBEGIN: 'afterbegin',
+  BEFOREEND: 'beforeend',
+};
+
+
+const render = (container, element, place) => {
+  switch(place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
 
 
 const getRandomInteger = (a = 1, b = 0) => {
@@ -65,4 +97,5 @@ const formatDateFromNow = (date) => (
   dayjs(date).fromNow(true)
 );
 
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow};
+
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, renderTemplate, createElement, RenderPosition, render};

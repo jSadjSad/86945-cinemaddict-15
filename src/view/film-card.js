@@ -1,18 +1,12 @@
+import {createElement} from '../utils.js';
 import {formatDateYear} from '../utils.js';
 
-export const createFilmCard = (film) => {
-
+const createFilmCard = (film) => {
   const {title, poster, releaseDate, runtime, genres, description, raiting, userDetails, comments} = film;
-
   const date = formatDateYear(releaseDate);
-
   const shortDescription = (description.length < 140) ? description : `${description.slice(0, 139)}…`;
-
   const genre = genres[0];
-  //
-
   const commentsNumber = `${comments.length} comments`;
-
   const {isInWatchList, isWatched, isFavorite} = userDetails;
 
   const watchListActiveStyle = (isInWatchList) ? ' film-card__controls-item--active' : '';
@@ -39,3 +33,27 @@ export const createFilmCard = (film) => {
     </div>
   </article>`);
 };
+
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCard(this._film);
+  }
+
+  getElement() {
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
