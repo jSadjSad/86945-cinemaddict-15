@@ -1,4 +1,4 @@
-import AbstractView from '.view/abstract.js';
+import AbstractView from './abstract.js';
 
 import {formatDateDay} from '../utils.js';
 import {formatDateTime} from '../utils.js';

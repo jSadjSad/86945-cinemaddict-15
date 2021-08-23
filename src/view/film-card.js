@@ -1,4 +1,4 @@
-import AbstractView from '.view/abstract.js';
+import AbstractView from './abstract.js';
 import {formatDateYear} from '../utils.js';
 
 const createFilmCardTemplate = (film) => {
@@ -39,10 +39,23 @@ export default class FilmCard extends AbstractView{
   constructor(film) {
     super();
     this._film = film;
+    this._cardElementClickHandler = this._cardElementClickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._film);
   }
 
+  _cardElementClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.click();
+  }
+
+  setCardElementClickHandler(callback) {
+    this._callback.click = callback;
+
+    this.getElement().querySelector('.film-card__poster').addEventListener('click',       this._cardElementClickHandler);
+    this.getElement().querySelector('.film-card__title').addEventListener('click',       this._cardElementClickHandler);
+    this.getElement().querySelector('.film-card__comments').addEventListener('click',       this._cardElementClickHandler);
+  }
 }
