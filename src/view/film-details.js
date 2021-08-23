@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractView from '.view/abstract.js';
 
 import {formatDateDay} from '../utils.js';
 import {formatDateTime} from '../utils.js';
@@ -165,25 +165,13 @@ const createFilmDetailsTemplate = (film) => {
 };
 
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractView{
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
-  }
-
-  getElement() {
-    if(!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
