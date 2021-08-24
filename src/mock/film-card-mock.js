@@ -1,8 +1,8 @@
-import {getRandomInteger} from '../utils.js';
-import {getRandomBoolean} from '../utils.js';
-import {getRandomFloat} from '../utils.js';
-import {getTimeFromMins} from '../utils.js';
-import {getRandomDateInPast} from '../utils.js';
+import {getRandomInteger} from '../utils/common.js';
+import {getRandomBoolean} from '../utils/common.js';
+import {getRandomFloat} from '../utils/common.js';
+import {getTimeFromMins} from '../utils/common.js';
+import {getRandomDateInPast} from '../utils/common.js';
 
 const MIN_DESCRIPTION_LENGTH = 1;
 const MAX_DESCRIPTION_LENGTH = 5;

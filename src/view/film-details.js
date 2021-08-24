@@ -1,8 +1,8 @@
-import {createElement} from '../utils.js';
+import AbstractView from './abstract.js';
 
-import {formatDateDay} from '../utils.js';
-import {formatDateTime} from '../utils.js';
-import {formatDateFromNow} from '../utils.js';
+import {formatDateDay} from '../utils/common.js';
+import {formatDateTime} from '../utils/common.js';
+import {formatDateFromNow} from '../utils/common.js';
 
 const DAY_IN_MILLISECONDS = 86400000;
 
@@ -165,25 +165,13 @@ const createFilmDetailsTemplate = (film) => {
 };
 
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractView{
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
-  }
-
-  getElement() {
-    if(!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
