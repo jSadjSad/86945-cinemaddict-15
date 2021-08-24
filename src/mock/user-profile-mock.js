@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../utils.js';
+import {getRandomInteger} from '../utils/common.js';
 const MIN_USER_RAITING = 0;
 const MAX_USER_RAITING = 50;
 
