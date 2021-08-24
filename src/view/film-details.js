@@ -1,8 +1,8 @@
 import AbstractView from './abstract.js';
 
-import {formatDateDay} from '../utils.js';
-import {formatDateTime} from '../utils.js';
-import {formatDateFromNow} from '../utils.js';
+import {formatDateDay} from '../utils/common.js';
+import {formatDateTime} from '../utils/common.js';
+import {formatDateFromNow} from '../utils/common.js';
 
 const DAY_IN_MILLISECONDS = 86400000;
 
