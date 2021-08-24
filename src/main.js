@@ -2,7 +2,7 @@ import UserProfileView from './view/user-profile.js';
 import MenuView from './view/menu.js';
 import SortView from './view/sort.js';
 import FilmBoardView from './view/film-board.js';
-import MainFilmList from './view/main-film-list.js';
+import MainFilmListView from './view/main-film-list.js';
 import FilmCardView from './view/film-card.js';
 import ShowMoreButtonView from './view/show-more.js';
 import ExtraFilmListView from './view/extra-film-list.js';
@@ -44,7 +44,7 @@ render(siteMainElement, sort, RenderPosition.BEFOREEND);
 const filmBoard = new FilmBoardView();
 render(siteMainElement, filmBoard, RenderPosition.BEFOREEND);
 
-const mainFilmsList = new MainFilmList();
+const mainFilmsList = new MainFilmListView();
 render(filmBoard, mainFilmsList, RenderPosition.BEFOREEND);
 
 const mainFilmsListContainer = mainFilmsList.getElement().querySelector('.films-list__container');
@@ -114,10 +114,16 @@ if (films.length > MAIN_FILM_LIST_COUNT_STEP) {
 }
 
 
-for (let i = 0; i < EXTRA_FILM_LISTS_NUMBER; i++) {
-  const extraFilmList = new ExtraFilmListView();
-  render(filmBoard, extraFilmList, RenderPosition.BEFOREEND);
+if (films.length !== 0) {
+  for (let i = 0; i < EXTRA_FILM_LISTS_NUMBER; i++) {
+    const extraFilmList = new ExtraFilmListView();
+    render(filmBoard, extraFilmList, RenderPosition.BEFOREEND);
+  }
 }
+
+const topRatedSilms = films;
+const mostCommentedFilms = films;
+
 
 const [topRatedFilmList, mostCommentedFilmList] = filmBoard.getElement().querySelectorAll('.films-list--extra');
 
@@ -132,11 +138,11 @@ const mostCommentedFilmListContainer = mostCommentedFilmList.querySelector('.fil
 
 
 for (let i = 0; i < EXTRA_FILM_LIST_COUNT; i++) {
-  renderFilmCard(topRatedFilmListContainer, films[i]);
+  renderFilmCard(topRatedFilmListContainer, topRatedSilms[i]);
 }
 
 for (let i = 0; i < EXTRA_FILM_LIST_COUNT; i++) {
-  renderFilmCard(mostCommentedFilmListContainer, films[i]);
+  renderFilmCard(mostCommentedFilmListContainer, mostCommentedFilms[i]);
 }
 
 
