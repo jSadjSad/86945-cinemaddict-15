@@ -10,7 +10,7 @@ import {generateStatistics} from './mock/statistics.js';
 import {generateUserRaiting} from './mock/user-profile-mock.js';
 
 
-const MAIN_FILM_LIST_COUNT = 22;
+const MAIN_FILM_LIST_COUNT = 0;
 
 
 const films = new Array(MAIN_FILM_LIST_COUNT).fill().map(generateFilm);
