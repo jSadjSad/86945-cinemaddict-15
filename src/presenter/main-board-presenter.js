@@ -1,13 +1,13 @@
-import {render, RenderPosition, remove} from '../utils/render.js';
+import {render, RenderPosition, remove, replace} from '../utils/render.js';
 
 import MenuView from '../view/menu.js';
 import SortView from '../view/sort.js';
 import FilmBoardView from '../view/film-board.js';
 import MainFilmListView from '../view/main-film-list.js';
-import FilmCardView from '../view/film-card.js';
 import ShowMoreButtonView from '../view/show-more.js';
 import ExtraFilmListView from '../view/extra-film-list.js';
 import FilmDetailsView from '../view/film-details.js';
+import FilmCardPresenter from './film-card-presenter.js';
 
 const MAIN_FILM_LIST_COUNT_STEP = 5;
 const EXTRA_FILM_LISTS_NUMBER = 2;
@@ -68,9 +68,8 @@ export default class MainBoard {
   }
 
   _renderFilmCard(filmCardContainer, film) {
-    const filmCard = new FilmCardView(film);
-    filmCard.setCardElementClickHandler(() => this._renderFilmDetailsPopup(film));
-    render(filmCardContainer, filmCard, RenderPosition.BEFOREEND);
+    const filmCardPresenter = new FilmCardPresenter(filmCardContainer);
+    filmCardPresenter.init(film, this._renderFilmDetailsPopup(film));
   }
 
   _renderFilmBoard() {

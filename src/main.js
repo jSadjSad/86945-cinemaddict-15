@@ -1,6 +1,6 @@
 import UserProfileView from './view/user-profile.js';
 import FooterStatisticsView from './view/footer-statistics.js';
-import MainBoardPresenter from './presenter/main-board.js';
+import MainBoardPresenter from './presenter/main-board-presenter.js';
 
 import {RenderPosition, render} from './utils/render.js';
 
@@ -10,7 +10,7 @@ import {generateStatistics} from './mock/statistics.js';
 import {generateUserRaiting} from './mock/user-profile-mock.js';
 
 
-const MAIN_FILM_LIST_COUNT = 0;
+const MAIN_FILM_LIST_COUNT = 22;
 
 
 const films = new Array(MAIN_FILM_LIST_COUNT).fill().map(generateFilm);
