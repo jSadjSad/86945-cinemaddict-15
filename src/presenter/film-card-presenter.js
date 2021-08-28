@@ -22,11 +22,18 @@ export default class FilmCard {
     const prevFilmCard = this._filmCard;
     //Создает экземпляр карточки
     this._filmCard = new FilmCardView(this._film);
+    this._filmDetailsPopup = new FilmDetailsView(this._film);
+    this._documentBody = document.querySelector('body');
+
     //Назначает контекст обработчикам
-    this._filmCard.setPopupOpenElementClickHandler(this.handlePopupOpenElementClick);
+    this._filmCard.setPopupOpenElementClickHandler(this._handlePopupOpenElementClick);
     this._filmCard.setWatchListClickHandler(this._handleWatchListClick);
     this._filmCard.setWatchedClickHandler(this._handleWatchedClick);
     this._filmCard.setFavouriteClickHandler(this._handleFavouriteClick);
+    this._filmDetailsPopup.setPopupCloseButtonClickHandler(this._removePopup);
+    this._filmDetailsPopup.setWatchListClickHandler(this._handleWatchListClick);
+    this._filmDetailsPopup.setWatchedClickHandler(this._handleWatchedClick);
+    this._filmDetailsPopup.setFavouriteClickHandler(this._handleFavouriteClick);
 
     //Если экземпляр не существует, создает
     if (prevFilmCard === null) {
@@ -48,69 +55,76 @@ export default class FilmCard {
   }
 
 
+  _escKeyDownHandler(evt) {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      this._filmDetailsPopup.getElement().remove();
+      this._documentBody.classList.remove('hide-overflow');
+      document.removeEventListener('keydown', this._onEscKeyDown);
+    }
+  }
+
+  _renderPopup() {
+    render(this._documentBody, this._filmDetailsPopup, RenderPosition.BEFOREEND);
+    this._documentBody.classList.add('hide-overflow');
+    document.addEventListener('keydown', this._escKeyDownHandler);
+  }
+
+  _removePopup() {
+    this._documentBody.removeCild(this._filmDetailsPopup);
+    this._documentBody.classList.remove('hide-overflow');
+  }
+
   //Создает экземпляр попапа, отрисовывает его
-  _handlePopupOpenElementClick(film) {
-    const documentBody = document.querySelector('body');
-    const filmDetailsPopup = new FilmDetailsView(film);
-    filmDetailsPopup.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
-      filmDetailsPopup.getElement().remove();
-      documentBody.classList.remove('hide-overflow');
-    });
+  _handlePopupOpenElementClick() {
+    if (this._documentBody.querySelector('.film-details')) {
+      this._removePopup();
+    }
 
-    const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        filmDetailsPopup.getElement().remove();
-        documentBody.classList.remove('hide-overflow');
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
-
-    render(documentBody, filmDetailsPopup, RenderPosition.BEFOREEND);
-    documentBody.classList.add('hide-overflow');
-    document.addEventListener('keydown', onEscKeyDown);
+    this._renderPopup();
+    document.addEventListener('click', this._escKeyDownHandler);
+    this._filmDetailsPopup.setPopupCloseButtonClickHandler(() => this.__removePopup());
   }
 
 
-  //Переключает значение userDetails.isInWatchList
+  //Переключает значение isInWatchList
   _handleWatchListClick() {
     this._changeData(
       Object.assign(
         {},
         this._film,
         {
-          isInWatchList: !this._film.userDetails.isInWatchList,
+          isInWatchList: !this._film.isInWatchList,
         },
       ),
     );
   }
 
-  //Переключает значение userDetails.isWatched
+
+  //Переключает значениеisWatched
   _handleWatchedClick() {
     this._changeData(
       Object.assign(
         {},
         this._film,
         {
-          isWatched: !this._film.userDetails.isWatched,
+          isWatched: !this._film.isWatched,
         },
       ),
     );
   }
 
-
-  //Переключает значение userDetails.isFavourite
+  //Переключает значение isFavourite
   _handleFavouriteClick() {
     this._changeData(
       Object.assign(
         {},
         this._film,
         {
-          isFavourite: !this._film.userDetails.isFavourite,
+          isFavourite: !this._film.isFavourite,
         },
       ),
     );
   }
-
 
 }

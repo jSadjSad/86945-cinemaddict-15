@@ -7,7 +7,7 @@ import {formatDateFromNow} from '../utils/common.js';
 const DAY_IN_MILLISECONDS = 86400000;
 
 const createFilmDetailsTemplate = (film) => {
-  const {title, originalTitle, poster, director, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, userDetails, comments} = film;
+  const {title, originalTitle, poster, director, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, comments, isInWatchList, isWatched, isFavorite} = film;
 
   const writersTerm = (writers.length > 1) ? 'Writers' : 'Writer';
   const writersContent = writers.join(', ');
@@ -18,8 +18,6 @@ const createFilmDetailsTemplate = (film) => {
   const date = formatDateDay(releaseDate);
 
   const genresList = genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('  ');
-
-  const {isInWatchList, isWatched, isFavorite} = userDetails;
 
   const watchListActiveStyle = (isInWatchList) ? 'film-details__control-button--active' : '';
   const watchedActiveStyle = (isWatched) ? 'film-details__control-button--active' : '';
@@ -173,5 +171,45 @@ export default class FilmDetails extends AbstractView{
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
+  }
+
+  _popupCloseButtonClickHandler(evt) {
+    evt.preventDefault;
+    this._callback._popupCloseButtonClick();
+  }
+
+  _watchListClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.watchListClick();
+  }
+
+  _watchedClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.watchedClick();
+  }
+
+  _favouriteClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.favouriteClick();
+  }
+
+  setPopupCloseButtonClickHandler(callback) {
+    this._callback.popupCloseButtonClick = callback;
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupCloseButtonClickHandler);
+  }
+
+  setWatchListClickHandler(callback) {
+    this._callback.watchListClick = callback;
+    this.getElement().querySelector('.film-details__control-button--watchlist').addEventListener('click', this._watchListClickHandler);
+  }
+
+  setWatchedClickHandler(callback) {
+    this._callback.watchedClick = callback;
+    this.getElement().querySelector('.film-details__control-button--watched').addEventListener('click', this._watchedClickHandler);
+  }
+
+  setFavouriteClickHandler(callback) {
+    this._callback.favouriteClick = callback;
+    this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favouriteClickHandler);
   }
 }
