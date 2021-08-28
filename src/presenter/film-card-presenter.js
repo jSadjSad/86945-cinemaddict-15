@@ -20,6 +20,7 @@ export default class FilmCard {
     this._film = film;
     //Сохраняет предыдущую карточку
     const prevFilmCard = this._filmCard;
+    const prevFilmDetailsPopup = this._filmDetailsPopup;
     //Создает экземпляр карточки
     this._filmCard = new FilmCardView(this._film);
     this._filmDetailsPopup = new FilmDetailsView(this._film);
@@ -36,13 +37,17 @@ export default class FilmCard {
     this._filmDetailsPopup.setFavouriteClickHandler(this._handleFavouriteClick);
 
     //Если экземпляр не существует, создает
-    if (prevFilmCard === null) {
+    if (prevFilmCard === null || prevFilmDetailsPopup === null) {
       render(this._filmCardContainer, this._filmCard, RenderPosition.BEFOREEND);
       return;
     }
     //Если экземпляр существует, заменяет на новый
     if (this._filmCardContainer.getElement().contains(prevFilmCard.getElement())) {
       replace(this._filmCard, prevFilmCard);
+    }
+
+    if (this._documentBody.getElement().contains(prevFilmDetailsPopup.getElement())) {
+      replace(this._filmDetailsPopup, prevFilmDetailsPopup);
     }
     //и удаляет старый экземпляр
     remove(prevFilmCard);
