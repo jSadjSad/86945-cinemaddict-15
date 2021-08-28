@@ -2,13 +2,11 @@ import AbstractView from './abstract.js';
 import {formatDateYear} from '../utils/common.js';
 
 const createFilmCardTemplate = (film) => {
-  const {title, poster, releaseDate, runtime, genres, description, raiting, userDetails, comments} = film;
+  const {title, poster, releaseDate, runtime, genres, description, raiting, comments, isInWatchList, isWatched, isFavorite} = film;
   const date = formatDateYear(releaseDate);
   const shortDescription = (description.length < 140) ? description : `${description.slice(0, 139)}…`;
   const genre = genres[0];
   const commentsNumber = `${comments.length} comments`;
-  const {isInWatchList, isWatched, isFavorite} = userDetails;
-
   const watchListActiveStyle = (isInWatchList) ? ' film-card__controls-item--active' : '';
   const watchedActiveStyle = (isWatched) ? ' film-card__controls-item--active' : '';
   const isFavoriteActiveStyle = (isFavorite) ? 'film-card__controls-item--active' : '';
@@ -39,23 +37,54 @@ export default class FilmCard extends AbstractView{
   constructor(film) {
     super();
     this._film = film;
-    this._cardElementClickHandler = this._cardElementClickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._film);
   }
 
-  _cardElementClickHandler(evt) {
+  //Создает ключ в объекте callback
+  _popupOpenElementClickHandler(evt) {
     evt.preventDefault;
-    this._callback.click();
+    this._callback.popupOpenElementClick();
   }
 
-  setCardElementClickHandler(callback) {
-    this._callback.click = callback;
+  _watchListClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.watchListClick();
+  }
 
-    this.getElement().querySelector('.film-card__poster').addEventListener('click', this._cardElementClickHandler);
-    this.getElement().querySelector('.film-card__title').addEventListener('click', this._cardElementClickHandler);
-    this.getElement().querySelector('.film-card__comments').addEventListener('click', this._cardElementClickHandler);
+  _watchedClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.watchedClick();
+  }
+
+  _favouriteClickHandler(evt) {
+    evt.preventDefault;
+    this._callback.favouriteClick();
+  }
+
+  //Сохраняет обработчик из параметра в объекте callback. Назначает обработчик DOM-елементу
+  setPopupOpenElementClickHandler(callback) {
+    this._callback.popupOpenElementClick = callback;
+
+    this.getElement().querySelector('.film-card__poster').addEventListener('click', this._popupOpenElementClickHandler);
+    this.getElement().querySelector('.film-card__title').addEventListener('click', this._popupOpenElementClickHandler);
+    this.getElement().querySelector('.film-card__comments').addEventListener('click', this._popupOpenElementClickHandler);
+  }
+
+  setWatchListClickHandler(callback) {
+    this._callback.watchListClick = callback;
+    this.getElement().querySelector('.film-card__poster').addEventListener('click', this._watchListClickHandler);
+  }
+
+  setWatchedClickHandler(callback) {
+    this._callback.watchedClick = callback;
+    this.getElement().querySelector('.film-card__poster').addEventListener('click', this._watchedClickHandler);
+  }
+
+  setFavouriteClickHandler(callback) {
+    this._callback.favouriteClick = callback;
+    this.getElement().querySelector('.film-card__poster').addEventListener('click', this._favouriteClickHandler);
   }
 }
