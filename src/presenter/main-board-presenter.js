@@ -24,9 +24,10 @@ export default class MainBoard {
     this._mainFilmsList = new MainFilmListView();
     this._showMoreButton = new ShowMoreButtonView();
 
-    this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._filmCardPresenter = new Map();
+    this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleFilmCardChange = this._handleFilmCardChange.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
   }
 
   init(filters, films) {
@@ -34,6 +35,11 @@ export default class MainBoard {
     this._filters = filters;
 
     this._renderMainBoard();
+  }
+
+  //Закрывает попапы
+  _handleModeChange() {
+    this._filmCardPresenter.forEach((presenter) => presenter.resetView());
   }
 
   //Заменяет карточку после изменения
@@ -55,9 +61,15 @@ export default class MainBoard {
     }
   }
 
+
+  //Отрисовывает board
+  _renderFilmBoard() {
+    render(this._mainBoardContainer, this._filmBoard, RenderPosition.BEFOREEND);
+  }
+
   //Отрисовывает карточку
   _renderFilmCard(filmCardContainer, film) {
-    const filmCardPresenter = new FilmCardPresenter(filmCardContainer, this._handleFilmCardChange);
+    const filmCardPresenter = new FilmCardPresenter(filmCardContainer, this._handleFilmCardChange, this._handleModeChange);
     filmCardPresenter.init(film);
     this._filmCardPresenter.set(film.id, filmCardPresenter);
   }
@@ -73,11 +85,6 @@ export default class MainBoard {
     this._filmCardPresenterList.clear;
     this._renderedFilmsCount = MAIN_FILM_LIST_COUNT_STEP;
     remove(this._showMoreButton);
-  }
-
-  //Отрисовывает board
-  _renderFilmBoard() {
-    render(this._mainBoardContainer, this._filmBoard, RenderPosition.BEFOREEND);
   }
 
   //Отрисовывает кнопку допоказа
