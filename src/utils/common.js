@@ -66,5 +66,18 @@ const formatDateFromNow = (date) => (
   dayjs(date).fromNow(true)
 );
 
+const updateItem = (items, update) => {
+  const index = items.findindex((item) => item.id === update.id);
 
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow};
+  if (index === -1) {
+    return items;
+  }
+
+  return[
+    ...items.slice(0, index),
+    update,
+    ...items.slice(index +1),
+  ];
+};
+
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, updateItem};

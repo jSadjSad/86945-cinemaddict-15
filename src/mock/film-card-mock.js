@@ -1,3 +1,4 @@
+import {nanoid} from 'nanoid';
 import {getRandomInteger} from '../utils/common.js';
 import {getRandomBoolean} from '../utils/common.js';
 import {getRandomFloat} from '../utils/common.js';
@@ -149,6 +150,7 @@ const createComments = () => {
 
 export const generateFilm = () => (
   {
+    id: nanoid(),
     title: generateFilmTitle(),
     originalTitle: generateFilmTitle(),
     poster: generateFilmPoster(),
@@ -162,13 +164,10 @@ export const generateFilm = () => (
     description: createDescription(),
     ageLimit: createAgeLimit(),
     raiting: getRandomFloat(FILM_MIN_RAITING, FILM_MAX_RAITING),
-    userDetails:
-    {
-      isWatched: getRandomBoolean(),
-      watchDate: getRandomDateInPast(SITE_STARTED_DATE),
-      isFavorite: getRandomBoolean(),
-      isInWatchList: getRandomBoolean(),
-    },
+    isInWatchList: getRandomBoolean(),
+    isWatched: getRandomBoolean(),
+    watchDate: getRandomDateInPast(SITE_STARTED_DATE),
+    isFavourite: getRandomBoolean(),
     comments: createComments(),
   }
 );
