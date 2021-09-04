@@ -1,11 +1,8 @@
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
 import FilmCardView from '../view/film-card.js';
 import FilmDetailsView from '../view/film-details.js';
-
-const Mode = {
-  DEFAULT: 'DEFAULT',
-  POPUP: 'POPUP',
-};
+import {isEscape} from '../utils/common.js';
+import {Mode} from '../utils/const.js';
 
 
 export default class FilmCard {
@@ -54,11 +51,11 @@ export default class FilmCard {
       return;
     }
     //Если экземпляр существует, заменяет на новый
-    if (this._filmCardContainer.getElement().contains(prevFilmCard.getElement())) {
+    if (this._filmCardContainer.contains(prevFilmCard.getElement())) {
       replace(this._filmCard, prevFilmCard);
     }
 
-    if (this._mode === Mode.POPUP) {
+    if (this._documentBody.contains(prevFilmDetailsPopup.getElement())) {
       replace(this._filmDetailsPopup, prevFilmDetailsPopup);
     }
     //Удаляет старные экземпляры
@@ -78,34 +75,33 @@ export default class FilmCard {
     }
   }
 
+  //Удаляет попап
+  _removePopup() {
+    document.body.removeChild(document.body.querySelector('.film-details'));
+    document.body.classList.remove('hide-overflow');
+    document.removeEventListener('keydown', this._onEscKeyDown);
+    this._mode = Mode.DEFAULT;
+  }
+
+  //Обработчик нажатия на Esc
   _escKeyDownHandler(evt) {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      evt.preventDefault();
-      this._filmDetailsPopup.getElement().remove();
-      this._documentBody.classList.remove('hide-overflow');
-      document.removeEventListener('keydown', this._onEscKeyDown);
+    if (isEscape(evt)) {
+      this._removePopup();
     }
   }
 
   //Отрисовывает попап
   _renderPopup() {
-    render(document.querySelector('body'), this._filmDetailsPopup, RenderPosition.BEFOREEND);
-    document.querySelector('body').classList.add('hide-overflow');
+    render(document.body, this._filmDetailsPopup, RenderPosition.BEFOREEND);
+    document.body.classList.add('hide-overflow');
     document.addEventListener('keydown', this._escKeyDownHandler);
     this._changeMode;
     this._mode = Mode.POPUP;
   }
 
-  //Удаляет попап
-  _removePopup() {
-    document.querySelector('body').removeCild(this._filmDetailsPopup);
-    document.querySelector('body').classList.remove('hide-overflow');
-    this._mode = Mode.DEFAULT;
-  }
-
   //Обработчик клика на постере, названии и комментариях
   _handlePopupOpenElementClick() {
-    if (document.querySelector('body').querySelector('.film-details')) {
+    if (document.body.querySelector('.film-details')) {
       this._removePopup();
     }
 

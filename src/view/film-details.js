@@ -7,7 +7,7 @@ import {formatDateFromNow} from '../utils/common.js';
 const DAY_IN_MILLISECONDS = 86400000;
 
 const createFilmDetailsTemplate = (film) => {
-  const {title, originalTitle, poster, director, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, comments, isInWatchList, isWatched, isFavorite} = film;
+  const {title, originalTitle, poster, director, writers, actors, releaseDate, runtime, country, genres, description, ageLimit, raiting, comments, isInWatchList, isWatched, isFavourite} = film;
 
   const writersTerm = (writers.length > 1) ? 'Writers' : 'Writer';
   const writersContent = writers.join(', ');
@@ -21,7 +21,7 @@ const createFilmDetailsTemplate = (film) => {
 
   const watchListActiveStyle = (isInWatchList) ? 'film-details__control-button--active' : '';
   const watchedActiveStyle = (isWatched) ? 'film-details__control-button--active' : '';
-  const isFavoriteActiveStyle = (isFavorite) ? 'film-details__control-button--active' : '';
+  const isFavouriteActiveStyle = (isFavourite) ? 'film-details__control-button--active' : '';
 
   const createCommentsItem = (comment) => {
     const {text, emoji, date: commentDate, author} = comment;
@@ -113,7 +113,7 @@ const createFilmDetailsTemplate = (film) => {
         <section class="film-details__controls">
           <button type="button" class="film-details__control-button film-details__control-button--watchlist ${watchListActiveStyle}" id="watchlist" name="watchlist" ${isInWatchList ? 'checked' : ''}>Add to watchlist</button>
           <button type="button" class="film-details__control-button film-details__control-button--watched ${watchedActiveStyle}" id="watched" name="watched" ${isWatched ? 'checked' : ''}>Already watched</button>
-          <button type="button" class="film-details__control-button film-details__control-button--favorite ${isFavoriteActiveStyle}" id="favorite" name="favorite" ${isFavorite ? 'checked' : ''}>Add to favorites</button>
+          <button type="button" class="film-details__control-button film-details__control-button--favorite ${isFavouriteActiveStyle}" id="favorite" name="favorite" ${isFavourite ? 'checked' : ''}>Add to favorites</button>
         </section>
       </div>
 
@@ -167,6 +167,10 @@ export default class FilmDetails extends AbstractView{
   constructor(film) {
     super();
     this._film = film;
+    this._popupCloseButtonClickHandler = this._popupCloseButtonClickHandler.bind(this);
+    this._watchListClickHandler = this._watchListClickHandler.bind(this);
+    this._watchedClickHandler = this._watchedClickHandler.bind(this);
+    this._favouriteClickHandler = this._favouriteClickHandler.bind(this);
   }
 
   getTemplate() {
@@ -175,7 +179,7 @@ export default class FilmDetails extends AbstractView{
 
   _popupCloseButtonClickHandler(evt) {
     evt.preventDefault;
-    this._callback._popupCloseButtonClick();
+    this._callback.popupCloseButtonClick();
   }
 
   _watchListClickHandler(evt) {

@@ -49,7 +49,7 @@ export const replace = (newChild, oldChild) => {
     throw new Error ('Can\'t replace unexisting elements');
   }
 
-  parent.replace(newChild, oldChild);
+  parent.replaceChild(newChild, oldChild);
 };
 
 export const remove = (component) => {

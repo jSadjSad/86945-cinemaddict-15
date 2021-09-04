@@ -1,5 +1,6 @@
 import {render, RenderPosition, remove} from '../utils/render.js';
-import {updateItem} from '../utils/common.js';
+import {updateItem, sortByDate, sortByRating} from '../utils/common.js';
+import {SortType} from '../utils/const.js';
 
 import MenuView from '../view/menu.js';
 import SortView from '../view/sort.js';
@@ -23,15 +24,17 @@ export default class MainBoard {
     this._filmBoard = new FilmBoardView();
     this._mainFilmsList = new MainFilmListView();
     this._showMoreButton = new ShowMoreButtonView();
-
     this._filmCardPresenter = new Map();
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleFilmCardChange = this._handleFilmCardChange.bind(this);
     this._handleModeChange = this._handleModeChange.bind(this);
+    this._currentSortType = SortType.DEFAULT;
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   init(filters, films) {
     this._films = films.slice();
+    this._sourcedFilms = films.slice();
     this._filters = filters;
 
     this._renderMainBoard();
@@ -45,6 +48,7 @@ export default class MainBoard {
   //Заменяет карточку после изменения
   _handleFilmCardChange(updatedFilm) {
     this._films = updateItem(this._films, updatedFilm);
+    this._sourcedFilms = updateItem(this._sourcedFilms, updatedFilm);
     this._filmCardPresenter.get(updatedFilm.id).init(updatedFilm);
   }
 
@@ -54,13 +58,38 @@ export default class MainBoard {
     render(this._mainBoardContainer, menu, RenderPosition.AFTERBEGIN);
   }
 
+
+  _sortFilms(sortType) {
+    switch (sortType) {
+      case SortType.DATE: this._films.sort(sortByDate);
+        break;
+
+      case SortType.RATING: this._films.sort(sortByRating);
+        break;
+
+      default: this._films = this._sourcedFilms.clice();
+    }
+    this._currentSortType = sortType;
+  }
+
+
+  _handleSortTypeChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+    this._sortFilms(sortType);
+    this._clearFilmList();
+    this._renderMainFilmList();
+  }
+
+
   //Отрисовывает сортировку
   _renderSort() {
     if (this._films.length !== 0) {
       render(this._mainBoardContainer, this._sort, RenderPosition.BEFOREEND);
     }
+    this._sort.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
-
 
   //Отрисовывает board
   _renderFilmBoard() {
@@ -138,8 +167,8 @@ export default class MainBoard {
         render(this._filmBoard, extraFilmList, RenderPosition.BEFOREEND);
       }
 
-      const topRatedFilms = this._films;
-      const mostCommentedFilms = this._films;
+      const topRatedFilms = this._films.slice();
+      const mostCommentedFilms = this._films.slice();
 
       const [topRatedFilmList, mostCommentedFilmList] = this._filmBoard.getElement().querySelectorAll('.films-list--extra');
 

@@ -2,14 +2,14 @@ import AbstractView from './abstract.js';
 import {formatDateYear} from '../utils/common.js';
 
 const createFilmCardTemplate = (film) => {
-  const {title, poster, releaseDate, runtime, genres, description, raiting, comments, isInWatchList, isWatched, isFavorite} = film;
+  const {title, poster, releaseDate, runtime, genres, description, raiting, comments, isInWatchList, isWatched, isFavourite} = film;
   const date = formatDateYear(releaseDate);
   const shortDescription = (description.length < 140) ? description : `${description.slice(0, 139)}…`;
   const genre = genres[0];
   const commentsNumber = `${comments.length} comments`;
   const watchListActiveStyle = (isInWatchList) ? ' film-card__controls-item--active' : '';
   const watchedActiveStyle = (isWatched) ? ' film-card__controls-item--active' : '';
-  const isFavoriteActiveStyle = (isFavorite) ? 'film-card__controls-item--active' : '';
+  const isFavouriteActiveStyle = (isFavourite) ? 'film-card__controls-item--active' : '';
 
 
   return (
@@ -27,7 +27,7 @@ const createFilmCardTemplate = (film) => {
     <div class="film-card__controls">
       <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${watchListActiveStyle}" type="button">Add to watchlist</button>
       <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${watchedActiveStyle}" type="button">Mark as watched</button>
-      <button class="film-card__controls-item film-card__controls-item--favorite ${isFavoriteActiveStyle}" type="button">Mark as favorite</button>
+      <button class="film-card__controls-item film-card__controls-item--favorite ${isFavouriteActiveStyle}" type="button">Mark as favorite</button>
     </div>
   </article>`);
 };
@@ -37,6 +37,10 @@ export default class FilmCard extends AbstractView {
   constructor(film) {
     super();
     this._film = film;
+    this._popupOpenElementClickHandler = this._popupOpenElementClickHandler.bind(this);
+    this._watchListClickHandler = this._watchListClickHandler.bind(this);
+    this._watchedClickHandler = this._watchedClickHandler.bind(this);
+    this._favouriteClickHandler = this._favouriteClickHandler.bind(this);
   }
 
   getTemplate() {

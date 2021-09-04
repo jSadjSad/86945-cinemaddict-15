@@ -67,7 +67,7 @@ const formatDateFromNow = (date) => (
 );
 
 const updateItem = (items, update) => {
-  const index = items.findindex((item) => item.id === update.id);
+  const index = items.findIndex((item) => item.id === update.id);
 
   if (index === -1) {
     return items;
@@ -80,4 +80,11 @@ const updateItem = (items, update) => {
   ];
 };
 
-export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, updateItem};
+const sortByDate = (filmA, filmB) =>  dayjs(filmB.releaseDate).diff(dayjs(filmA.releaseDate));
+
+const sortByRating = (filmA, filmB) => filmB.rating - filmA.rating;
+
+
+const isEscape = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+export {getRandomInteger, getRandomBoolean, getTimeFromMins, getRandomFloat, getRandomDateInPast, formatDateYear, formatDateDay, formatDateTime, formatDateFromNow, updateItem, isEscape, sortByDate, sortByRating};
