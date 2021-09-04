@@ -110,8 +110,8 @@ export default class MainBoard {
 
   //Очищает список карточек
   _clearFilmList() {
-    this._filmCardPresenterList.forEach((presenter) => presenter.destroy());
-    this._filmCardPresenterList.clear;
+    this._filmCardPresenter.forEach((presenter) => presenter.destroy());
+    this._filmCardPresenter.clear();
     this._renderedFilmsCount = MAIN_FILM_LIST_COUNT_STEP;
     remove(this._showMoreButton);
   }
