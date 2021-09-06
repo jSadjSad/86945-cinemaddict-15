@@ -14,7 +14,7 @@ const createFilmCardTemplate = (film) => {
 
   return (
     `<article class="film-card">
-    <h3 class="film-card__title">${title}e</h3>
+    <h3 class="film-card__title">${title}</h3>
     <p class="film-card__rating">${raiting}</p>
     <p class="film-card__info">
       <span class="film-card__year">${date}</span>
