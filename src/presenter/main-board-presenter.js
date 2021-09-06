@@ -20,7 +20,6 @@ export default class MainBoard {
   constructor(siteMainElement) {
     this._mainBoardContainer = siteMainElement;
     this._renderedFilmsCount = MAIN_FILM_LIST_COUNT_STEP;
-    this._sort = new SortView();
     this._filmBoard = new FilmBoardView();
     this._mainFilmsList = new MainFilmListView();
     this._showMoreButton = new ShowMoreButtonView();
@@ -67,7 +66,7 @@ export default class MainBoard {
       case SortType.RATING: this._films.sort(sortByRating);
         break;
 
-      default: this._films = this._sourcedFilms.clice();
+      default: this._films = this._sourcedFilms.slice();
     }
     this._currentSortType = sortType;
   }
@@ -79,16 +78,17 @@ export default class MainBoard {
     }
     this._sortFilms(sortType);
     this._clearFilmList();
-    this._renderMainFilmList();
+    this._renderMainList();
   }
 
 
   //Отрисовывает сортировку
   _renderSort() {
     if (this._films.length !== 0) {
+      this._sort = new SortView();
+      this._sort.setSortTypeChangeHandler(this._handleSortTypeChange);
       render(this._mainBoardContainer, this._sort, RenderPosition.BEFOREEND);
     }
-    this._sort.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   //Отрисовывает board
